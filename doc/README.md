@@ -1,7 +1,8 @@
 # Doc
 At this folder, I keep some references, some articles that I read and stuff like that.
 
-Wikipedia (https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe)
+# Random Links
+Wikipedia (https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe)<br>
 Online Game (http://vikeshkhanna.webfactional.com/ultimate/)
 
 # Articles
