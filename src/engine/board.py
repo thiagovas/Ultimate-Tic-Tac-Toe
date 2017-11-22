@@ -74,8 +74,22 @@ class Board:
       0 if player one has won at any line.
       1 if player two has won at any line of the board.
     '''
-    pass
-
+    
+    for line in range(3):
+      c_x = 0
+      c_o = 0
+      for c in range(3):
+        if self.tab[line][c] == 'X':
+          c_x += 1
+        if self.tab[line][c] == 'O':
+          c_o += 1
+      
+      if c_x == 3:
+        return 0
+      if c_o == 3:
+        return 1
+    return -1
+      
 
   def check_winner_column(self):
     '''
@@ -83,7 +97,20 @@ class Board:
       0 if player one has won at any column.
       1 if player two has won at any line of the board.
     '''
-    pass
+    for c in range(3):
+      c_x = 0
+      c_o = 0
+      for line in range(3):
+        if self.tab[line][c] == 'X':
+          c_x += 1
+        if self.tab[line][c] == 'O':
+          c_o += 1
+      
+      if c_x == 3:
+        return 0
+      if c_o == 3:
+        return 1
+    return -1
 
 
   def check_winner_diagonals(self):
@@ -92,7 +119,35 @@ class Board:
       0 if player one has won at any diagonal.
       1 if player two has won at any diagonal of the board.
     '''
-    pass
+    
+    # Checking main diagonal...
+    c_x = 0
+    c_o = 0
+    for i in range(3):
+      if self.tab[i][i] == 'X':
+        c_x += 1
+      if self.tab[i][i] == 'O':
+        c_o += 1
+    
+    if c_x == 3:
+      return 0
+    if c_o == 3:
+      return 1
+    
+    # Checking secondary diagonal...
+    c_x = 0
+    c_o = 0
+    for i in range(3):
+      if self.tab[i][2-i] == 'X':
+        c_x += 1
+      if self.tab[i][2-i] == 'O':
+        c_o += 1
+    
+    if c_x == 3:
+      return 0
+    if c_o == 3:
+      return 1
+    
 
   
   def check_old_lady(self):
@@ -109,6 +164,7 @@ class Board:
     return check_diagonals_draw()
   
   
+
   def check_line_draw(self, line):
     '''
       This function checks if there is way for any player to win
@@ -125,6 +181,7 @@ class Board:
       if len(self.tab[line][i]) != 0:
         dic[self.tab[line][i]] = 1
     return (len(dic) == 2)
+
 
 
   def check_column_draw(self, column):
@@ -145,6 +202,7 @@ class Board:
     return (len(dic) == 2)
   
   
+
   def check_diagonals_draw(self):
     '''
       This function checks if there's a way for any player to win

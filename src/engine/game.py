@@ -18,6 +18,7 @@ class Game:
     Definitions:
       - Player 1 = Player X
       - Player 2 = Player O
+      - Upper-case X and O !!
   '''
   
 
