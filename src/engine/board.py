@@ -68,3 +68,102 @@ class Board:
     return self.tab[line][column]
     
 
+  def check_winner_lines(self):
+    '''
+      This function returns -1 if no one has won at any line.
+      0 if player one has won at any line.
+      1 if player two has won at any line of the board.
+    '''
+    pass
+
+
+  def check_winner_column(self):
+    '''
+      This function returns -1 if no one has won at any column.
+      0 if player one has won at any column.
+      1 if player two has won at any line of the board.
+    '''
+    pass
+
+
+  def check_winner_diagonals(self):
+    '''
+      This function returns -1 if no one has won at any diagonal.
+      0 if player one has won at any diagonal.
+      1 if player two has won at any diagonal of the board.
+    '''
+    pass
+
+  
+  def check_old_lady(self):
+    '''
+      This function checks if the game has come to a draw.
+      The old_lady here is just a joke, in case you're not
+      a portuguese speaker.
+    '''
+    for i in range(3):
+      if not self.check_line_draw(i):
+        return False
+      if not self.check_column_draw(i):
+        return False
+    return check_diagonals_draw()
+  
+  
+  def check_line_draw(self, line):
+    '''
+      This function checks if there is way for any player to win
+      at the line [line].
+    '''
+
+    # Disclaimer: I implemented this function this way to not 
+    #             define a pattern on the symbols.
+    #             If the players want to play the game writing
+    #             Y and Z, instead of X and O, this function
+    #             won't need any modifications.
+    dic = {}
+    for i in range(3):
+      if len(self.tab[line][i]) != 0:
+        dic[self.tab[line][i]] = 1
+    return (len(dic) == 2)
+
+
+  def check_column_draw(self, column):
+    '''
+      This function checks if there is way for any player to win
+      at a given column [column].
+    '''
+    
+    # Disclaimer: I implemented this function this way to not 
+    #             define a pattern on the symbols.
+    #             If the players want to play the game writing
+    #             Y and Z, instead of X and O, this function
+    #             won't need any modifications.
+    dic = {}
+    for i in range(3):
+      if len(self.tab[i][colummn]) != 0:
+        dic[self.tab[i][column]] = 1
+    return (len(dic) == 2)
+  
+  
+  def check_diagonals_draw(self):
+    '''
+      This function checks if there's a way for any player to win
+      at any diagonal.
+    '''
+
+    # Disclaimer: I implemented this function this way to not 
+    #             define a pattern on the symbols.
+    #             If the players want to play the game writing
+    #             Y and Z, instead of X and O, this function
+    #             won't need any modifications.
+    main_diag = {}
+    for i in range(3):
+      if len(self.tab[i][i]) != 0:
+        main_diag[self.tab[i][i]] = 1
+    
+    sec_diag = {}
+    for i in range(3):
+      if len(self.tab[i][2-i]) != 0:
+        sec_diag[self.tab[i][2-i]] = 1
+    
+    return (len(main_diag) == 2 and len(sec_diag) == 2)
