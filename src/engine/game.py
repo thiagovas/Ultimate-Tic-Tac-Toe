@@ -22,7 +22,7 @@ class Game:
   '''
   
 
-  def __init__(self, player_id, starting_player):
+  def __init__(self, player_id, starting_player, small_boards, big_board):
     '''
       Constructor of Game class.
       [player_id] is the id number of the bot.
@@ -31,22 +31,21 @@ class Game:
       [player_id] must be 0 or 1.
       [starting_player] must be 0 or 1.
     '''
-    self.small_boards = []
-    for i in range(3):
-      self.small_boards.append([Board(), Board(), Board()])
-    self.big_board = Board()
-    
+    self.small_boards = small_boards
+    self.big_board = big_board
     self.bot_id = player_id
-    self.current_player = starting_player
     self.AI = AI()
   
   
-  def move(self, ):
+  
+  def move(self, last_move):
     if self.game_has_ended():
-      return [-1, -1]
-    move_done = mode(self.big_board
-    self.current_player = 1 - self.current_player
-    return move_done
+      return [-1, -1, -1, -1]
+    
+    return self.AI.move(self.big_board, self.small_boards,
+                        self.bot_id, last_move[2],
+                        last_move[3])
+  
     
   
   def game_has_ended(self):

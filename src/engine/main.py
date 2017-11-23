@@ -4,10 +4,16 @@
 # Here be main!
 
 from game import Game
+from board import Board
 
 def main():
-  player1 = Game(0, 0)
-  player2 = Game(1, 0)
+  small_boards = []
+  for i in range(3):
+    small_boards.append([Board(), Board(), Board()])
+  big_board = Board()
+  
+  player1 = Game(0, 0, small_boards, big_board)
+  player2 = Game(1, 0, small_boards, big_board)
   
   last_move = [-1, -1, -1, -1]
   last_log = -14

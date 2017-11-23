@@ -3,6 +3,8 @@
 # 
 # In here, you can find the board class.
 
+import sys
+
 
 class Board:
   '''
@@ -18,7 +20,23 @@ class Board:
     '''
     self.tab = [['', '', ''] for x in range(3)]
   
-
+  
+  def print_board(self):
+    for i in range(3):
+      for j in range(3):
+        if len(self.tab[i][j]) == 0:
+          sys.stdout.write(' ')
+        else:
+          sys.stdout.write(self.tab[i][j])
+        if j != 2:
+          sys.stdout.write('|')
+      print ""
+      for j in range(3):
+        sys.stdout.write('--')
+      print ""
+  
+  
+  
   def valid_position(self, line, column):
     '''
       This function receives a position of the board in terms

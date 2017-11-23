@@ -16,8 +16,13 @@ class AI:
     pass
   
   
-  def move(self, big_board, sline, scolumn):
+  def move(self, big_board, small_boards, player_id, sline, scolumn):
     '''
       This is the main function of the AI class.
-      The function returns the place where the move must be done.
+      The function changes the board with the move, and returns
+      the place where the move was done.
     '''
+    pass
+
+
+
