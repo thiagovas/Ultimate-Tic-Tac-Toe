@@ -19,15 +19,18 @@ def main():
   
   last_move = [-1, -1, -1, -1]
   last_log = -14
+  n_moves = 0
   
   while True:
     last_move = player1.move(last_move)
     last_log = player1.check_state()
+    n_moves += 1
     if last_log >= 0:
       break
     
     last_move = player2.move(last_move)
     last_log = player2.check_state()
+    n_moves += 1
     if last_log >= 0:
       break
   
@@ -37,6 +40,8 @@ def main():
     print "Player 2"
   else:
     print "Draw"
+
+  print '#Moves:', n_moves
 
 
 if __name__ == '__main__':
