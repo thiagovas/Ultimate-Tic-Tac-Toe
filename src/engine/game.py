@@ -8,6 +8,7 @@
 
 from board import Board
 from AI.base import BaseAI
+from AI.randomai import RandomAI
 
 
 class Game:
@@ -16,8 +17,8 @@ class Game:
     Here is where the magic happens.
     
     Definitions:
-      - Player 1 = Player X
-      - Player 2 = Player O
+      - Player 0 = Player X
+      - Player 1 = Player O
       - Upper-case X and O !!
   '''
   
@@ -34,21 +35,36 @@ class Game:
     self.small_boards = small_boards
     self.big_board = big_board
     self.bot_id = player_id
-    self.AI = BaseAI()
+    self.AI = RandomAI()
   
   
   
   def move(self, last_move):
-    if self.game_has_ended():
+    if self.check_state() >= 0:
       return [-1, -1, -1, -1]
+      
+    # Making sure the move made by the other player is updated in this instance.
+    if last_move[0] != -1:
+      if self.bot_id == 0:
+        self.small_boards[last_move[0]][last_move[1]].fill(last_move[2],
+                                                               last_move[3], 'O')
+      else:
+        self.small_boards[last_move[0]][last_move[1]].fill(last_move[2],
+                                                           last_move[3], 'X')
+      
+      new_state = self.small_boards[last_move[0]][last_move[1]].check_state()
+      if new_state == 0:
+        self.big_board.fill(last_move[0], last_move[1], 'X')
+      elif new_state == 1:
+        self.big_board.fill(last_move[0], last_move[1], 'O')
     
     return self.AI.move(self.big_board, self.small_boards,
                         self.bot_id, last_move[2],
                         last_move[3])
   
-    
+ 
   
-  def game_has_ended(self):
+  def check_state(self):
     '''
       This function returns an integer value.
       0 if player 0 has won the game,
@@ -56,25 +72,14 @@ class Game:
       2 if it ended in a draw,
       -1 if the game has not ended yet.
     '''
-    if self.big_board.check_old_lady():
-      return 2
+    state = self.big_board.check_state()
+    if state != -1:
+      return state
     
-    
-    wl = self.big_board.check_winner_lines()
-    wc = self.big_board.check_winner_column()
-    wd = self.big_board.check_winner_diagonals()
-    
-    if wl != -1:
-      return wl
-    
-    if wc != -1:
-      return wc
-
-    if wd != -1:
-      return wd
-    
-    return -1
-  
-
-
-
+    for i in range(3):
+      for j in range(3):
+        small_state = self.small_boards[i][j].check_state()
+        if small_state == -1 or small_state == 2:
+          if not self.small_boards[i][j].board_fulfilled():
+            return -1
+    return 2

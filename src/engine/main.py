@@ -3,6 +3,8 @@
 # 
 # Here be main!
 
+# TODO: Consider moving this piece of code to UI/
+
 from game import Game
 from board import Board
 
@@ -20,21 +22,21 @@ def main():
   
   while True:
     last_move = player1.move(last_move)
-    last_log = player1.game_has_ended()
+    last_log = player1.check_state()
     if last_log >= 0:
       break
     
     last_move = player2.move(last_move)
-    last_log = player2.game_has_ended()
+    last_log = player2.check_state()
     if last_log >= 0:
       break
   
-  if last_log == -1:
-    print "Draw"
-  elif last_log = 0:
+  if last_log == 0:
     print "Player 1"
-  else:
+  elif last_log == 1:
     print "Player 2"
+  else:
+    print "Draw"
 
 
 if __name__ == '__main__':

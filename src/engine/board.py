@@ -85,9 +85,50 @@ class Board:
       return "SEU MERDA! MANDA A CARALHA DA POSIÇÂO DA MANEIRA CERTA!!!"
     
     return self.tab[line][column]
+   
+
+  
+  def board_fulfilled(self):
+    '''
+      This function returns if the board if fulfilled or not.
+    '''
+    for i in range(3):
+      for j in range(3):
+        if len(self.tab[i][j]) == 0:
+          return False
+    return True
+
+
+
+  def check_state(self):
+    '''
+      This function returns an integer value.
+      0 if player 0 has won the game,
+      1 if player 1 has won the game,
+      2 if it ended in a draw,
+      -1 if the game has not ended yet.
+    '''
+    if self.check_old_lady():
+      return 2
     
-
-
+    
+    wl = self.check_winner_lines()
+    wc = self.check_winner_column()
+    wd = self.check_winner_diagonals()
+    
+    if wl != -1:
+      return wl
+    
+    if wc != -1:
+      return wc
+    
+    if wd != -1:
+      return wd
+    
+    return -1
+  
+  
+  
   def check_winner_lines(self):
     '''
       This function returns -1 if no one has won at any line.
@@ -169,6 +210,8 @@ class Board:
       return 0
     if c_o == 3:
       return 1
+
+    return -1
     
 
   
@@ -183,7 +226,7 @@ class Board:
         return False
       if not self.check_column_draw(i):
         return False
-    return check_diagonals_draw()
+    return self.check_diagonals_draw()
   
   
 
@@ -219,7 +262,7 @@ class Board:
     #             won't need any modifications.
     dic = {}
     for i in range(3):
-      if len(self.tab[i][colummn]) != 0:
+      if len(self.tab[i][column]) != 0:
         dic[self.tab[i][column]] = 1
     return (len(dic) == 2)
   
