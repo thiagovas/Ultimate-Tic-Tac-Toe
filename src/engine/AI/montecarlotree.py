@@ -5,14 +5,19 @@
 # The main function here is 'move'.
 
 
-from board import Board
+from base import BaseAI
 
 
-class AI:
+class MonteCarloTree(BaseAI):
   '''
+    This class is the base class for all AI's one may create to
+    this game.
   '''
   
   def __init__(self):
+    '''
+      Constructor of MonteCarloTree's class.
+    '''
     pass
   
   
@@ -22,7 +27,5 @@ class AI:
       The function changes the board with the move, and returns
       the place where the move was done.
     '''
-    pass
-
-
+    raise NotImplementedError('Should have implemented this function.')
 

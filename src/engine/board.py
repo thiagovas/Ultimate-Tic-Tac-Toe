@@ -72,6 +72,7 @@ class Board:
     
     self.tab[line][column] = value
     return ""
+
   
   
   def get_value(self, line, column):
@@ -85,6 +86,7 @@ class Board:
     
     return self.tab[line][column]
     
+
 
   def check_winner_lines(self):
     '''
@@ -107,7 +109,8 @@ class Board:
       if c_o == 3:
         return 1
     return -1
-      
+    
+
 
   def check_winner_column(self):
     '''
@@ -129,6 +132,7 @@ class Board:
       if c_o == 3:
         return 1
     return -1
+
 
 
   def check_winner_diagonals(self):

@@ -7,7 +7,7 @@
 
 
 from board import Board
-from AI import AI
+from AI.base import BaseAI
 
 
 class Game:
@@ -34,7 +34,7 @@ class Game:
     self.small_boards = small_boards
     self.big_board = big_board
     self.bot_id = player_id
-    self.AI = AI()
+    self.AI = BaseAI()
   
   
   
