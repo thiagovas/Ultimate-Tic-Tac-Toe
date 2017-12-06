@@ -3,10 +3,11 @@
 # 
 # Here be main!
 
-# TODO: Consider moving this piece of code to UI/
+import sys
+sys.path.append('../../')
 
-from game import Game
-from board import Board
+from engine.game import Game
+from engine.board import Board
 
 def main():
   small_boards = []
