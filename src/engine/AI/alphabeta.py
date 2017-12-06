@@ -16,16 +16,14 @@ from ..board import Board
 class ABState:
   '''
     The ABState represents a node of the alpha-beta pruning.
-    It carries the current board and the current payoff.
+    It carries the current board.
   '''
 
-  def __init__(self, psmall_boards, palpha, pbeta, psline, pscolumn, pplayer_id):
+  def __init__(self, psmall_boards, palpha, pbeta, psline, pscolumn):
     '''
       Constructor of ABState's class.
     '''
-    ptable = PTable1()
     self.s_boards = deepcopy(psmall_boards)
-    self.pvalue = ptable.payoff(self.s_boards, pplayer_id)
     self.alphavalue = palpha
     self.betavalue = pbeta
     self.slinevalue = psline
@@ -64,16 +62,6 @@ class ABState:
             return -1
     return 2
 
-
-  def payoff(self):
-    '''
-      This function just returns the payoff of this state.
-    '''
-    return self.pvalue
-  
-
-  def set_payoff(self, value):
-    self.pvalue = value
 
 
   def alpha(self):
@@ -119,8 +107,10 @@ class ABState:
 
 class AlphaBetaAI(BaseAI):
   '''
-    This class is the base class for all AI's one may create to
-    this game.
+    Alpha-Beta Pruning class.
+
+    As the other AI classes, the most important function here is move.
+    The default payoff table is PTable1.
   '''
 
   def __init__(self):
@@ -128,6 +118,15 @@ class AlphaBetaAI(BaseAI):
       Constructor of AlphaBeta's class.
     '''
     self.INF = 10**9
+    self.ptable = PTable1()
+
+
+
+  def set_payoff_table(self, new_table):
+    '''
+      Setter of self.ptable.
+    '''
+    self.ptable = new_table
 
 
 
@@ -150,8 +149,7 @@ class AlphaBetaAI(BaseAI):
     if filled_positions >= 61:
       depth = 4
     
-    state = ABState(small_boards, -self.INF, self.INF, sline, scolumn,
-                    player_id)
+    state = ABState(small_boards, -self.INF, self.INF, sline, scolumn)
     value, ret = self.complete_abpruning(state, True, player_id, depth)
 
 
@@ -162,7 +160,7 @@ class AlphaBetaAI(BaseAI):
 
   def update_boards(self, big_board, small_boards, op, player_id):
     '''
-      ...
+      This method just updates the board with the player's move.
     '''
     if player_id == 0:
       small_boards[op[0]][op[1]].fill(op[2], op[3], 'X')
@@ -182,12 +180,13 @@ class AlphaBetaAI(BaseAI):
   def complete_abpruning(self, ab_state, maximizer, player_id, max_depth=2):
     '''
       This function runs the entire AB tree.
+      max_depth must always be an even number.
 
       Returns: The value of the node, and the move to be done.
     '''
 
     if max_depth == 0 or ab_state.state() != -1:
-      return ab_state.payoff(), [-1, -1, -1, -1]
+      return self.ptable.payoff(ab_state.small_boards(), player_id), [-1, -1, -1, -1]
 
     children = []
     ret_move = [-1, -1, -1, -1]
@@ -223,7 +222,7 @@ class AlphaBetaAI(BaseAI):
         ab_state.small_boards()[v[0]][v[1]].fill(v[2], v[3], 'O')
       
       new_state = ABState(ab_state.small_boards(), ab_state.alpha(),
-                          ab_state.beta(), v[2], v[3], player_id)
+                          ab_state.beta(), v[2], v[3])
       ab_state.small_boards()[v[0]][v[1]].fill(v[2], v[3], '')
 
       
