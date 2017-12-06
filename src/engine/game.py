@@ -9,6 +9,7 @@
 from board import Board
 from AI.base import BaseAI
 from AI.randomai import RandomAI
+from AI.alphabeta import AlphaBetaAI
 
 
 class Game:
@@ -35,7 +36,7 @@ class Game:
     self.small_boards = small_boards
     self.big_board = big_board
     self.bot_id = player_id
-    self.AI = RandomAI()
+    self.AI = AlphaBetaAI()
   
   
   

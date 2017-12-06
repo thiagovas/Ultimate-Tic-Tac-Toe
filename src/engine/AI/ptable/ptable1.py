@@ -5,7 +5,7 @@
 # There is just one class in this file: PTable1
 
 
-def PTable1():
+class PTable1:
   '''
     This class just serves to calculate the payoff of a given board.
   '''
@@ -35,6 +35,6 @@ def PTable1():
         if state  == 0 or state == 1:
           if state == player_id:
             psum += p_values[i][j]
-          else;
+          else:
             psum -= p_values[i][j]
     return psum

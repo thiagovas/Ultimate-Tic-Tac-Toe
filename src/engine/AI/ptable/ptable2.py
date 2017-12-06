@@ -4,7 +4,7 @@
 #
 
 
-def PTable2():
+class PTable2:
   '''
     This class 
   '''
@@ -34,6 +34,6 @@ def PTable2():
         if state  == 0 or state == 1:
           if state == player_id:
             psum += p_values[i][j]
-          else;
+          else:
             psum -= p_values[i][j]
     return psum
