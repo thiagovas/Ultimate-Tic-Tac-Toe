@@ -145,12 +145,12 @@ class AlphaBetaAI(BaseAI):
             if small_boards[i][j].get_value(k, l) != '':
               filled_positions += 1
 
-    depth = 2
-    if filled_positions >= 61:
-      depth = 4
+    depth = 4
+    if filled_positions >= 62:
+      depth = 6
     
     state = ABState(small_boards, -self.INF, self.INF, sline, scolumn)
-    value, ret = self.complete_abpruning(state, True, player_id, depth)
+    value, ret = self.complete_abpruning(state, True, player_id, player_id, depth)
 
 
     self.update_boards(big_board, small_boards, ret, player_id)
@@ -177,7 +177,8 @@ class AlphaBetaAI(BaseAI):
 
 
 
-  def complete_abpruning(self, ab_state, maximizer, player_id, max_depth=2):
+  def complete_abpruning(self, ab_state, maximizer, player_id, orig_player,
+                         max_depth=2):
     '''
       This function runs the entire AB tree.
       max_depth must always be an even number.
@@ -186,7 +187,7 @@ class AlphaBetaAI(BaseAI):
     '''
 
     if max_depth == 0 or ab_state.state() != -1:
-      return self.ptable.payoff(ab_state.small_boards(), player_id), [-1, -1, -1, -1]
+      return self.ptable.payoff(ab_state.small_boards(), orig_player), [-1, -1, -1, -1]
 
     children = []
     ret_move = [-1, -1, -1, -1]
@@ -228,21 +229,25 @@ class AlphaBetaAI(BaseAI):
       
       if maximizer:
         # - Update value
-        ret_value, cur_move = self.complete_abpruning(new_state, False, 1-player_id, max_depth-1)
+        ret_value, cur_move = self.complete_abpruning(new_state, False,
+                                                      1-player_id, orig_player,
+                                                      max_depth-1)
         # - Update alpha
-        ab_state.set_alpha(max(ab_state.alpha(), value))
         if ret_value > value:
           value = ret_value
           ret_move = v
+        ab_state.set_alpha(max(ab_state.alpha(), value))
       else:
         # - Update value
-        ret_value, cur_move = self.complete_abpruning(new_state, True, 1-player_id, max_depth-1)
+        ret_value, cur_move = self.complete_abpruning(new_state, True,
+                                                      1-player_id, orig_player,
+                                                      max_depth-1)
 
         # - Update beta
-        ab_state.set_beta(min(ab_state.beta(), value))
         if ret_value < value:
           value = ret_value
           ret_move = v
+        ab_state.set_beta(min(ab_state.beta(), value))
       
       if ab_state.beta() <= ab_state.alpha():
         break

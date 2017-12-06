@@ -8,6 +8,7 @@ sys.path.append('../../')
 
 from engine.game import Game
 from engine.board import Board
+from engine.AI.randomai import RandomAI
 
 def main():
   small_boards = []
@@ -15,8 +16,8 @@ def main():
     small_boards.append([Board(), Board(), Board()])
   big_board = Board()
   
-  player1 = Game(0, 0, small_boards, big_board)
-  player2 = Game(1, 0, small_boards, big_board)
+  player1 = Game(0, 0, small_boards, big_board, RandomAI())
+  player2 = Game(1, 0, small_boards, big_board, RandomAI())
   
   last_move = [-1, -1, -1, -1]
   last_log = -14

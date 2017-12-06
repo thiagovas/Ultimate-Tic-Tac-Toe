@@ -7,9 +7,6 @@
 
 
 from board import Board
-from AI.base import BaseAI
-from AI.randomai import RandomAI
-from AI.alphabeta import AlphaBetaAI
 
 
 class Game:
@@ -24,7 +21,7 @@ class Game:
   '''
   
 
-  def __init__(self, player_id, starting_player, small_boards, big_board):
+  def __init__(self, player_id, starting_player, small_boards, big_board, pAI):
     '''
       Constructor of Game class.
       [player_id] is the id number of the bot.
@@ -36,7 +33,7 @@ class Game:
     self.small_boards = small_boards
     self.big_board = big_board
     self.bot_id = player_id
-    self.AI = AlphaBetaAI()
+    self.AI = pAI
   
   
   
