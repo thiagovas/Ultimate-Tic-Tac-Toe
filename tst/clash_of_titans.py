@@ -51,12 +51,17 @@ def clean_the_blood_from_the_floor():
 
 
 
-def fight(big_board, small_boards):
+def fight(big_board, small_boards, rev=False):
   p1AI = AlphaBetaAI()
   p1AI.set_payoff_table(PTable1())
   
+  p2AI = RandomAI()
+
+  if rev:
+    p1AI, p2AI = p2AI, p1AI
+
   player1 = Game(0, 0, small_boards, big_board, p1AI)
-  player2 = Game(1, 0, small_boards, big_board, RandomAI())
+  player2 = Game(1, 0, small_boards, big_board, p2AI)
   
   last_move = [-1, -1, -1, -1]
   last_log = -14
@@ -89,21 +94,28 @@ def main():
   p2 = 0
   draws = 0
   mean_moves = 0
-  for i in range(10**2):
+  for i in range(500):
+    print i
     big_board, small_boards = clean_the_blood_from_the_floor()
-    result, n_moves = fight(big_board, small_boards)
+    result, n_moves = fight(big_board, small_boards, False)
     mean_moves += n_moves
-    print result
     if result == 0:
       draws += 1
     elif result == 1:
       p1 += 1
     else:
       p2 += 1
-  
-  print p1, p2, draws, '  #Avg Moves:', (mean_moves/(10**2))
+    
+    result, n_moves = fight(big_board, small_boards, True)
+    mean_moves += n_moves
+    if result == 0:
+      draws += 1
+    elif result == 1:
+      p2 += 1
+    else:
+      p1 += 1
 
-
+  print p1, p2, draws, '  #Avg Moves:', (float(mean_moves)/(10**3))
 
 if __name__ == '__main__':
   main()
