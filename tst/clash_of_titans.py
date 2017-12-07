@@ -37,7 +37,7 @@ def clean_the_blood_from_the_floor():
   last_move = [-1, -1, -1, -1]
   last_log = -14
   
-  for i in range(20):
+  for i in range(15):
     last_move = player1.move(last_move)
     last_log = player1.check_state()
     if last_log >= 0:
