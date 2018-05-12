@@ -1,0 +1,22 @@
+/* Based on: https://codepen.io/solartic/pen/qEGqNL */
+#tic-tac-toe-board {
+  display: block;
+  margin: 0 auto;
+}
+
+.canvas-wrapper {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+}
+
+.canvas-wrapper-parent {
+  transform-style: preserver-3d;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  color: #F88017;
+}
